@@ -136,7 +136,23 @@ int main()
 
     //****** Read the file into inpuMatrix *******
     char input_digit;
-    while((input_digit = fgetc(filePtr))!=EOF){
+    int curr_read;
+    curr_read = 1;
+    while((input_digit = fgetc(filePtr)) != EOF){
+    	if(curr_read > 90)
+    		break;
+
+    	if(curr_read%10 == 0 && input_digit != '\n')
+    	{
+			printf("Incorrect Format\n");
+			exit(1);
+    	}
+
+    	if(curr_read%10 != 0 && (input_digit-'0' <= 0 || input_digit - '0' > 9))
+    	{
+			printf("Incorrect Format\n");
+			exit(1);
+		}	
     	if(input_digit != '\n')
         {
         	inputMatrix[i][j] = input_digit;
@@ -144,10 +160,11 @@ int main()
         		i++;
         	j = (j+1)%9;
         }
+        curr_read++;
     }
  
-	struct params square_1_coord;
-	
+
+	struct params square_1_coord;	
 	struct params square_2_coord;
 	struct params square_3_coord;
 	struct params square_4_coord;
@@ -285,6 +302,7 @@ int main()
     	printf("Square_7 check passed!\n");
     else
     	printf("Square_7 check failed!\n");
+
 
     if((bool)square_8_correct == true)
     	printf("Square_8 check passed!\n");
