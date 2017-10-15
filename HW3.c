@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 
-char inputFileName[] = "Sudoku.txt";
+//char inputFileName[] = "Sudoku.txt";
 char inputMatrix[9][9];
 
 struct params
@@ -115,7 +115,7 @@ void *Check_square(struct params *passed_in)
     return (void *)true;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	//for loop counter
 	int i = 0;
@@ -123,7 +123,7 @@ int main()
  
 	//**** Generic Filo IO ******
 	FILE *filePtr;
-	filePtr = (fopen(inputFileName, "r"));
+	filePtr = (fopen(argv[1], "r"));
 	if(filePtr == NULL)
     {
        printf("Fail to read the file\n");
@@ -138,6 +138,8 @@ int main()
     char input_digit;
     int curr_read;
     curr_read = 1;
+
+    //****** Read File into the Matrix and Format Check *******
     while((input_digit = fgetc(filePtr)) != EOF){
     	if(curr_read > 90)
     		break;
@@ -145,12 +147,14 @@ int main()
     	if(curr_read%10 == 0 && input_digit != '\n')
     	{
 			printf("Incorrect Format\n");
+			printf("here1");
 			exit(1);
     	}
 
     	if(curr_read%10 != 0 && (input_digit-'0' <= 0 || input_digit - '0' > 9))
     	{
 			printf("Incorrect Format\n");
+			printf("here2");
 			exit(1);
 		}	
     	if(input_digit != '\n')
